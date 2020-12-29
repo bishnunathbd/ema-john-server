@@ -19,11 +19,10 @@ client.connect(err => {
   const productsCollection = client.db(process.env.DB_NAME).collection("products");
   
   app.post('/addProduct', (req, res) => {
-    const product = req.body;
-    console.log(product);
-    productsCollection.insertOne(product)
+    const products = req.body;
+    productsCollection.insertMany(products)
     .then(result => {
-      console.log(result);
+      console.log(result.insertedCount);
     })
   })
 });
