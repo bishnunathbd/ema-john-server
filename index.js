@@ -25,6 +25,13 @@ client.connect(err => {
       console.log(result.insertedCount);
     })
   })
+
+  app.get('/products', (req, res) => {
+    productsCollection.find({})
+    .toArray((err, documents) => {
+      res.send(documents);
+    })
+  })
 });
 
 
