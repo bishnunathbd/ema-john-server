@@ -17,6 +17,7 @@ const port = 5000
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const productsCollection = client.db(process.env.DB_NAME).collection("products");
+  const ordersCollection = client.db(process.env.DB_NAME).collection("orders");
 
   app.post('/addProduct', (req, res) => {
     const products = req.body;
@@ -45,6 +46,15 @@ client.connect(err => {
     productsCollection.find({ key: { $in: productKeys } })
       .toArray((err, documents) => {
         res.send(documents);
+      })
+  })
+
+  // add order
+  app.post('/addOrder', (req, res) => {
+    const order = req.body;
+    ordersCollection.insertOne(order)
+      .then(result => {
+        res.send(result.insertedCount > 0);
       })
   })
 });
