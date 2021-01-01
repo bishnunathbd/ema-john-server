@@ -20,7 +20,7 @@ client.connect(err => {
 
   app.post('/addProduct', (req, res) => {
     const products = req.body;
-    productsCollection.insertMany(products)
+    productsCollection.insertOne(products)
       .then(result => {
         console.log(result.insertedCount);
       })
